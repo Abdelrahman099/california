@@ -5,7 +5,6 @@
 // or a YouTube, Vimeo, Wistia or direct .mp4 link.
 // Leave empty to show the placeholder.
 export const PREVIEW_VIDEO_URL = 'videos/virtual-preview.mp4';
-export const PREVIEW_VIDEO_POSTER = 'videos/virtual-preview-poster.jpg';
 export const PREVIEW_VIDEO_CAPTIONS = 'videos/virtual-preview.vtt';
 
 // GoHighLevel calendar for the Initial Student Admissions Appointment (main goal of the page).
