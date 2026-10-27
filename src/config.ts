@@ -6,6 +6,8 @@
 // Leave empty to show the placeholder.
 export const PREVIEW_VIDEO_URL = 'videos/virtual-preview.mp4';
 export const PREVIEW_VIDEO_CAPTIONS = 'videos/virtual-preview.vtt';
+// Streaming version of the same video (plays on every device and supports chapter jumps).
+export const PREVIEW_VIDEO_STREAM = 'videos/preview-hls/index.m3u8';
 
 // GoHighLevel calendar for the Initial Student Admissions Appointment (main goal of the page).
 export const BOOKING_URL =

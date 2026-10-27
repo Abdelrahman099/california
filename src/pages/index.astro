@@ -5,6 +5,7 @@ import {
   videoEmbed,
   PREVIEW_VIDEO_URL,
   PREVIEW_VIDEO_CAPTIONS,
+  PREVIEW_VIDEO_STREAM,
   BOOKING_URL,
   APPLICATION_URL,
   GHL_EMBED_SCRIPT,
@@ -243,8 +244,14 @@ const description =
             )}
             {video?.kind === 'file' && (
               <>
-                <video id="preview-video" controls playsinline preload="metadata">
-                  <source src={video.src} type="video/mp4" />
+                <video
+                  id="preview-video"
+                  controls
+                  playsinline
+                  preload="none"
+                  data-hls={asset(PREVIEW_VIDEO_STREAM)}
+                  data-mp4={video.src}
+                >
                   <track kind="captions" src={asset(PREVIEW_VIDEO_CAPTIONS)} srclang="en" label="English" />
                 </video>
                 <button class="cover" type="button" data-play aria-label="Play the Virtual Preview, 8 minutes 46 seconds">
@@ -565,45 +572,73 @@ const description =
   </div>
 
   <script is:inline src={GHL_EMBED_SCRIPT}></script>
-  <script is:inline>
-    // Virtual Preview player: poster overlay and chapter jumps.
-    (function () {
-      var v = document.getElementById('preview-video');
-      if (!v) return;
-      var overlay = document.querySelector('[data-play]');
-      var started = false;
-      function start(t) {
-        if (overlay) overlay.hidden = true;
+  <script>
+    // Virtual Preview player: streams the video (works on iPhone and every browser),
+    // hides the cover when it starts, and handles chapter jumps.
+    const v = document.getElementById('preview-video') as HTMLVideoElement | null;
+    if (v) {
+      const cover = document.querySelector<HTMLElement>('[data-play]');
+      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-seek]'));
+      let attached: Promise<void> | null = null;
+      let started = false;
+
+      const attach = () => {
+        if (attached) return attached;
+        attached = (async () => {
+          const hlsUrl = v.dataset.hls || '';
+          const mp4Url = v.dataset.mp4 || '';
+          if (hlsUrl && v.canPlayType('application/vnd.apple.mpegurl')) {
+            v.src = hlsUrl; // Safari and iPhone play streams natively
+            return;
+          }
+          try {
+            const { default: Hls } = await import('hls.js');
+            if (hlsUrl && Hls.isSupported()) {
+              const hls = new Hls({ startPosition: 0 });
+              hls.loadSource(hlsUrl);
+              hls.attachMedia(v);
+              return;
+            }
+          } catch (e) {
+            /* fall back to the plain file below */
+          }
+          v.src = mp4Url;
+        })();
+        return attached;
+      };
+
+      const start = async (t?: number) => {
+        if (cover) cover.hidden = true;
+        started = true;
+        await attach();
         if (typeof t === 'number') {
-          var seek = function () {
-            try { v.currentTime = t; } catch (e) {}
+          const seek = () => {
+            v.currentTime = t;
           };
           if (v.readyState >= 1) seek();
           else v.addEventListener('loadedmetadata', seek, { once: true });
         }
-        var p = v.play();
-        if (p && p.catch) p.catch(function () {});
-        started = true;
-      }
-      if (overlay) overlay.addEventListener('click', function () { start(); });
-      v.addEventListener('play', function () { if (overlay) overlay.hidden = true; });
-      var buttons = document.querySelectorAll('[data-seek]');
-      buttons.forEach(function (b) {
-        b.addEventListener('click', function () {
-          start(Number(b.getAttribute('data-seek')));
-          v.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-      });
-      // Highlight the chapter that is playing.
-      v.addEventListener('timeupdate', function () {
-        var cur = null;
-        buttons.forEach(function (b) {
-          if (v.currentTime >= Number(b.getAttribute('data-seek'))) cur = b;
-        });
-        buttons.forEach(function (b) { b.classList.toggle('is-current', b === cur && started); });
-      });
-    })();
+        v.play().catch(() => {});
+      };
 
+      cover?.addEventListener('click', () => start());
+      v.addEventListener('play', () => {
+        if (cover) cover.hidden = true;
+      });
+      buttons.forEach((b) =>
+        b.addEventListener('click', () => {
+          start(Number(b.dataset.seek));
+          v.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }),
+      );
+      v.addEventListener('timeupdate', () => {
+        let cur: HTMLButtonElement | null = null;
+        for (const b of buttons) if (v.currentTime >= Number(b.dataset.seek)) cur = b;
+        buttons.forEach((b) => b.classList.toggle('is-current', started && b === cur));
+      });
+    }
+  </script>
+  <script is:inline>
     // Hide the phone booking bar while the calendar itself is on screen.
     (function () {
       var bar = document.querySelector('[data-mobile-bar]');
