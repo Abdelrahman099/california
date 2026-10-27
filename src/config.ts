@@ -1,9 +1,20 @@
-// Edit these values to change contact details and the registration form.
+// Edit these values to change the video, booking calendar, application and contact details.
 
-// GoHighLevel form shown in the "Register" section.
-// Replace with the form ID of your Virtual Preview registration form.
-export const REGISTRATION_FORM_URL =
-  'https://connect.californiadentalassistant.com/widget/form/Zz8aVljab60uOlQf5XTH';
+// The Virtual Preview recording.
+// Paste a YouTube, Vimeo or Wistia link, or a direct .mp4 link.
+// Leave empty to show the placeholder.
+export const PREVIEW_VIDEO_URL = '';
+
+// GoHighLevel calendar for the Initial Student Admissions Appointment (main goal of the page).
+export const BOOKING_URL =
+  'https://connect.californiadentalassistant.com/widget/booking/Zf3RkN0aNXTkeU70JhAx';
+
+// GoHighLevel Student Application (secondary action).
+export const APPLICATION_URL =
+  'https://connect.californiadentalassistant.com/widget/survey/8OH1bTjr2aiv5sb7EpMB';
+
+export const GHL_EMBED_SCRIPT =
+  'https://connect.californiadentalassistant.com/js/form_embed.js';
 
 export const MAIN_SITE = 'https://www.californiadentalassistant.com';
 export const PHONE = '(916) 249-1253';
@@ -16,4 +27,20 @@ export function asset(path: string): string {
   const prefix =
     import.meta.env.ASSETS_PREFIX || import.meta.env.BASE_URL || '';
   return `${String(prefix).replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+}
+
+// Turns a YouTube / Vimeo / Wistia / .mp4 link into something the page can play.
+export function videoEmbed(url: string):
+  | { kind: 'iframe'; src: string }
+  | { kind: 'file'; src: string }
+  | null {
+  if (!url) return null;
+  if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return { kind: 'file', src: url };
+  const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([\w-]{11})/);
+  if (yt) return { kind: 'iframe', src: `https://www.youtube-nocookie.com/embed/${yt[1]}?rel=0&modestbranding=1` };
+  const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeo) return { kind: 'iframe', src: `https://player.vimeo.com/video/${vimeo[1]}` };
+  const wistia = url.match(/wistia\.(?:com|net)\/(?:medias|embed\/iframe)\/(\w+)/);
+  if (wistia) return { kind: 'iframe', src: `https://fast.wistia.net/embed/iframe/${wistia[1]}` };
+  return { kind: 'iframe', src: url };
 }
