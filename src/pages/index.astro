@@ -1,0 +1,944 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {
+  asset,
+  REGISTRATION_FORM_URL,
+  MAIN_SITE,
+  PHONE,
+  PHONE_HREF,
+  EMAIL,
+  ADDRESS,
+} from '../config';
+
+const stats = [
+  { value: '200+', label: 'Satisfied students across the state' },
+  { value: '99%', label: 'Course completion success rate' },
+  { value: '25+', label: 'Training locations in California' },
+  { value: '100+', label: 'Partnered dental clinics' },
+];
+
+const quotes = [
+  {
+    text: 'The program has modern equipment and helps with job placement. I highly recommend this program to anyone who wants to be a dental assistant!',
+    name: 'Yadira Martinez',
+    role: 'Dental Assisting Program Student',
+  },
+  {
+    text: 'If you’re looking to accelerate your career as a dental assistant, this should be your one and only choice.',
+    name: 'Jessica P.',
+    role: 'Alumni Student',
+  },
+  {
+    text: 'If you’re on the fence about joining, let this comment be the nudge you need. You won’t regret it.',
+    name: 'Osamah Al Janabi',
+    role: 'Dental Assistant Program Student',
+  },
+];
+
+const inside = [
+  {
+    n: '#1',
+    title: 'How the program works',
+    body: 'See the self-paced, hybrid format up close: 300+ course hours that mix online lessons with hands-on clinical training. You get 12 months of access, and most students finish in 8 to 15 weeks.',
+    points: ['Online coursework you do on your schedule', 'Hands-on clinical training near you', '40+ instructors, including dentists and RDAs'],
+    img: 'images/learn-xray.jpg',
+    alt: 'A CDA Program student practicing dental X-ray positioning on a classmate.',
+  },
+  {
+    n: '#2',
+    title: 'Your path to getting hired',
+    body: 'Learn how students move from coursework into real dental offices, and how our job placement team helps you land your first role after you finish.',
+    points: ['Resume writing and interview prep', 'Connections with 100+ partnered dental clinics', 'A 1-on-1 dental buddy while you train'],
+    img: 'images/learn-chairside.jpg',
+    alt: 'A student in protective gear working chairside at a dental operatory.',
+  },
+  {
+    n: '#3',
+    title: 'What it costs and how to pay',
+    body: 'Get a clear picture of tuition and the ways to make it fit your budget, then leave with your next step: a call with an admissions advisor who can map out your start date.',
+    points: ['0% tuition financing', 'Monthly scholarships and student grants', 'Flexible payment plans'],
+    img: 'images/learn-graduate.jpg',
+    alt: 'A CDA Program graduate in scrubs ready for her first dental job.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Is the Virtual Preview free?',
+    a: 'Yes. The preview costs nothing and doesn’t commit you to enrolling. Register and you get access to the recording.',
+  },
+  {
+    q: 'Do I have to watch at a set time?',
+    a: 'No. The preview was recorded live, so you can watch it whenever it suits you, on your phone or computer.',
+  },
+  {
+    q: 'When can I start the program?',
+    a: 'Enrollment is open, so you can start whenever you’re ready. Access to your course takes 24 to 48 business hours after you register.',
+  },
+  {
+    q: 'How long does the program take?',
+    a: 'You get 12 months to complete the program. Because it’s self-paced, most students finish in 8 to 15 weeks.',
+  },
+  {
+    q: 'How much does the program cost?',
+    a: 'Cost depends on your course track and whether you qualify for financial aid. We offer 0% tuition financing, payment plans and scholarships. An admissions advisor will give you exact pricing after the preview.',
+  },
+  {
+    q: 'Is CPR certification included?',
+    a: 'Yes. CPR certification is part of the program, with classes that follow American Heart Association (AHA) guidelines.',
+  },
+  {
+    q: 'Will you help me find a job?',
+    a: 'Yes. Graduates get job placement assistance, including resume support, interview preparation and connections to local dental practices that are hiring.',
+  },
+];
+
+const title = 'Virtual Preview | California Dental Assistant Program';
+const description =
+  'Watch a free recorded walkthrough of the California Dental Assistant Program: how it works, how students get hired, and how to pay for it.';
+---
+
+<Layout title={title} description={description}>
+  <!-- Top bar -->
+  <a class="topbar" href="#register">
+    <span class="wrap topbar-inner">
+      <span class="badge"><span class="dot" aria-hidden="true"></span>Free</span>
+      <span>Virtual Preview <span class="sep">|</span> Recorded live, watch anytime</span>
+    </span>
+  </a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href={MAIN_SITE} class="brand" aria-label="California Dental Assistant Program home">
+        <img src={asset('images/logo-lockup.png')} alt="California Dental Assistant Program" width="276" height="86" />
+      </a>
+      <a href="#register" class="btn btn-gold btn-sm">Watch free</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Dental Assistant Program · Virtual Preview</span>
+          <h1>Is a dental career the change you’ve been waiting for?</h1>
+          <p class="hero-sub">See exactly how you could be working in a dental office in as little as 8 to 15 weeks.</p>
+          <p class="hero-body">
+            This free, recorded preview walks you through the California Dental Assistant Program from the inside: how the
+            training works, how students get hired, and what it costs. Watch it on your own time, then decide if it’s right for you.
+          </p>
+          <div class="cta-row">
+            <a href="#register" class="btn btn-gold">I’m ready to watch <span class="arrow" aria-hidden="true">→</span></a>
+            <span class="cta-note">Free · On demand · No commitment</span>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <img
+            src={asset('images/hero-clinic.jpg')}
+            alt="CDA Program students in protective gowns providing care at a community dental clinic."
+            width="1600"
+            height="1066"
+            fetchpriority="high"
+          />
+          <figcaption class="hero-chip">
+            <strong>300+</strong>
+            <span>course hours, online and hands-on</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats" aria-label="Program results">
+      <div class="wrap stats-grid">
+        {stats.map((s) => (
+          <div class="stat">
+            <span class="stat-value">{s.value}</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Social proof -->
+    <section class="section proof">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Student stories</span>
+          <h2>What people are saying</h2>
+        </div>
+        <div class="proof-grid">
+          <figure class="video-card">
+            <video
+              controls
+              preload="none"
+              playsinline
+              poster={asset('videos/testimonial-poster.jpg')}
+              aria-label="Dental assistant student testimonial video"
+            >
+              <source src={asset('videos/testimonial.mp4')} type="video/mp4" />
+            </video>
+            <figcaption>A CDA Program student on her experience</figcaption>
+          </figure>
+          <div class="quotes">
+            {quotes.map((q) => (
+              <blockquote class="quote">
+                <p>“{q.text}”</p>
+                <footer>
+                  <strong>{q.name}</strong>
+                  <span>{q.role}</span>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inside the preview -->
+    <section class="section inside">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Inside the preview</span>
+          <h2>Three things you’ll walk away knowing</h2>
+          <p>The preview follows the same order a new student does, from first lesson to first paycheck.</p>
+        </div>
+        <ol class="inside-list">
+          {inside.map((item, i) => (
+            <li class={`inside-row ${i % 2 ? 'flip' : ''}`}>
+              <div class="inside-media">
+                <img src={asset(item.img)} alt={item.alt} loading="lazy" width="900" height="1273" />
+              </div>
+              <div class="inside-copy">
+                <span class="inside-num">{item.n}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                <ul class="checks">
+                  {item.points.map((p) => (
+                    <li>{p}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="center-cta">
+          <a href="#register" class="btn btn-gold">I’m ready to watch <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What you get + FAQ -->
+    <section class="section details">
+      <div class="wrap details-grid">
+        <div class="details-copy">
+          <span class="eyebrow">What you will get</span>
+          <h2>A full program walkthrough, on your schedule</h2>
+          <figure class="details-img">
+            <img
+              src={asset('images/clinic-group.jpg')}
+              alt="CDA Program students setting up sterilized instruments for a clinical training day."
+              loading="lazy"
+              width="1400"
+              height="933"
+            />
+          </figure>
+          <div class="steps">
+            <div class="step">
+              <span class="step-label">Watch</span>
+              <p>A recording of our live session covering the curriculum, clinical training, internship and job placement.</p>
+            </div>
+            <div class="step">
+              <span class="step-label">Ask</span>
+              <p>Bring your questions to an admissions advisor after you watch. They’ll cover pricing, financing and start dates.</p>
+            </div>
+            <div class="step">
+              <span class="step-label">Start</span>
+              <p>Enrollment is open. When you’re ready, you can begin within 24 to 48 business hours.</p>
+            </div>
+          </div>
+          <p class="fit">
+            <strong>Who it’s for:</strong> people in California who want a hands-on healthcare career and are ready to start
+            training in the next few months. No dental experience needed to watch.
+          </p>
+        </div>
+        <div class="faq">
+          <h3 class="faq-title">Frequently asked questions</h3>
+          {faqs.map((f, i) => (
+            <details class="faq-item" id={`faq-${i + 1}`} open={i === 0}>
+              <summary>
+                <span>{f.q}</span>
+                <span class="plus" aria-hidden="true"></span>
+              </summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Register -->
+    <section class="register" id="register">
+      <div class="wrap register-grid">
+        <div class="register-copy">
+          <img class="seal" src={asset('images/logo-seal.png')} alt="" width="120" height="120" />
+          <span class="eyebrow eyebrow-light">Free Virtual Preview</span>
+          <h2>Watch the Dental Assistant Program preview</h2>
+          <p>Enter your details and we’ll send you the recording right away. Prefer to talk first? Call us at <a href={PHONE_HREF}>{PHONE}</a>.</p>
+          <ul class="checks checks-light">
+            <li>Recorded live session, watch anytime</li>
+            <li>See the training, internship and job placement</li>
+            <li>Get tuition and financing options</li>
+          </ul>
+        </div>
+        <div class="form-card" data-form-slot>
+          <iframe
+            src={REGISTRATION_FORM_URL}
+            title="Virtual Preview registration form"
+            loading="lazy"
+            style="width:100%;height:620px;border:none;border-radius:4px"
+          ></iframe>
+          <script is:inline src="https://connect.californiadentalassistant.com/js/form_embed.js"></script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <img src={asset('images/logo-lockup-white.png')} alt="California Dental Assistant Program" width="220" height="69" />
+        <p>Dental Board of California–approved continuing education provider.</p>
+      </div>
+      <nav class="footer-links" aria-label="Program">
+        <span class="footer-head">Program</span>
+        <a href={`${MAIN_SITE}/courses`}>Courses</a>
+        <a href={`${MAIN_SITE}/financial-aid`}>Financial aid</a>
+        <a href={`${MAIN_SITE}/faq`}>FAQ</a>
+        <a href={`${MAIN_SITE}/contact-us`}>Contact us</a>
+      </nav>
+      <div class="footer-contact">
+        <span class="footer-head">Contact</span>
+        <a href={PHONE_HREF}>{PHONE}</a>
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <span>{ADDRESS}</span>
+      </div>
+    </div>
+    <div class="wrap footer-legal">
+      <p>
+        Results described on this page are not typical and are not guaranteed. Completion times, job placement and outcomes
+        depend on each student’s effort, schedule and local job market. Program details are subject to change.
+      </p>
+      <p>
+        © 2026 California Dental Assistant Program ·
+        <a href={`${MAIN_SITE}/privacy-policy`}>Privacy Policy</a> ·
+        <a href={`${MAIN_SITE}/terms-and-conditions`}>Terms and Conditions</a>
+      </p>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  /* Top bar */
+  .topbar {
+    display: block;
+    background: var(--navy-deep);
+    color: var(--on-navy);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-block: 10px;
+    text-align: center;
+  }
+  .topbar:hover .topbar-inner > span:last-child {
+    text-decoration: underline;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--navy-deep);
+  }
+  .sep {
+    opacity: 0.5;
+    margin-inline: 4px;
+  }
+
+  /* Header */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 12px;
+  }
+  .brand img {
+    height: 52px;
+    width: auto;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(180deg, var(--wash) 0%, var(--white) 100%);
+    padding-block: clamp(40px, 7vw, 88px) clamp(48px, 7vw, 80px);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .hero-copy {
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 5.6vw, 64px);
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .hero-sub {
+    font-size: clamp(19px, 2vw, 23px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .hero-body {
+    max-width: 58ch;
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 20px;
+    margin-top: 8px;
+  }
+  .hero-media {
+    position: relative;
+    margin: 0;
+  }
+  .hero-media img {
+    width: 100%;
+    aspect-ratio: 4 / 3.4;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+  .hero-chip {
+    position: absolute;
+    left: -18px;
+    bottom: 24px;
+    display: grid;
+    gap: 2px;
+    max-width: 220px;
+    padding: 14px 18px;
+    background: var(--navy);
+    color: var(--on-navy-soft);
+    border-radius: var(--radius);
+    font-size: 14px;
+    line-height: 1.35;
+    box-shadow: var(--shadow);
+  }
+  .hero-chip strong {
+    color: var(--gold);
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  /* Stats */
+  .stats {
+    background: var(--navy);
+    color: var(--on-navy);
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-block: 28px;
+  }
+  .stat {
+    display: grid;
+    gap: 4px;
+    padding: 8px 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .stat:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .stat-value {
+    font-size: clamp(30px, 3.6vw, 42px);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label {
+    font-size: 14px;
+    color: var(--on-navy-soft);
+    line-height: 1.4;
+  }
+
+  /* Proof */
+  .proof-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .video-card {
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .video-card video {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 560px;
+    object-fit: cover;
+    background: var(--navy-deep);
+    border-radius: var(--radius-lg);
+  }
+  .video-card figcaption {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .quotes {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+  }
+  .quote {
+    margin: 0;
+    padding: 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    display: grid;
+    gap: 16px;
+  }
+  .quote p {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .quote footer {
+    display: grid;
+    font-size: 14px;
+  }
+  .quote footer strong {
+    color: var(--navy);
+  }
+  .quote footer span {
+    color: var(--muted);
+  }
+
+  /* Inside */
+  .inside {
+    background: var(--wash);
+  }
+  .inside-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(40px, 6vw, 72px);
+  }
+  .inside-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+  }
+  .inside-row.flip .inside-media {
+    order: 2;
+  }
+  .inside-media img {
+    width: 100%;
+    aspect-ratio: 4 / 4.2;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+  .inside-copy {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+  }
+  .inside-num {
+    font-size: clamp(56px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 0.9;
+    color: var(--gold);
+    letter-spacing: -0.04em;
+  }
+  .inside-copy h3 {
+    font-size: clamp(26px, 3vw, 34px);
+    color: var(--navy);
+  }
+  .inside-copy > p {
+    max-width: 56ch;
+  }
+  .checks {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .checks li {
+    position: relative;
+    padding-left: 32px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .checks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--navy);
+  }
+  .checks li::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--gold);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .center-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(48px, 6vw, 72px);
+  }
+
+  /* Details + FAQ */
+  .details-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(36px, 6vw, 80px);
+    align-items: start;
+  }
+  .details-copy {
+    display: grid;
+    gap: 22px;
+    min-width: 0;
+  }
+  .details-copy h2 {
+    font-size: clamp(30px, 4vw, 42px);
+  }
+  .details-img {
+    margin: 0;
+  }
+  .details-img img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+  }
+  .steps {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 16px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .step-label {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    padding-top: 3px;
+  }
+  .fit {
+    padding: 18px 20px;
+    background: #fff7e8;
+    border-radius: var(--radius);
+    color: var(--ink);
+    font-size: 16px;
+  }
+  .faq {
+    min-width: 0;
+    position: sticky;
+    top: 100px;
+  }
+  .faq-title {
+    font-size: 24px;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq-item summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-block: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .plus {
+    position: relative;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--wash);
+  }
+  .plus::before,
+  .plus::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 12px;
+    height: 2px;
+    background: var(--navy);
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease;
+  }
+  .plus::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .faq-item[open] .plus {
+    background: var(--gold);
+  }
+  .faq-item[open] .plus::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  .faq-item p {
+    padding-bottom: 20px;
+    max-width: 60ch;
+  }
+
+  /* Register */
+  .register {
+    background: var(--navy);
+    color: var(--on-navy);
+    padding-block: clamp(56px, 8vw, 104px);
+    scroll-margin-top: 70px;
+  }
+  .register-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .register-copy {
+    display: grid;
+    gap: 18px;
+    min-width: 0;
+  }
+  .seal {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--white);
+    padding: 4px;
+  }
+  .eyebrow-light {
+    color: var(--gold);
+  }
+  .register h2 {
+    color: var(--on-navy);
+    font-size: clamp(30px, 4vw, 44px);
+  }
+  .register p {
+    color: var(--on-navy-soft);
+    font-size: 18px;
+  }
+  .register p a {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .checks-light li {
+    color: var(--on-navy);
+  }
+  .checks-light li::before {
+    background: var(--gold);
+  }
+  .checks-light li::after {
+    border-color: var(--navy);
+  }
+  .form-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    min-width: 0;
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--navy-deep);
+    color: var(--on-navy-soft);
+    padding-block: 56px 32px;
+    font-size: 15px;
+  }
+  .site-footer a {
+    color: var(--on-navy);
+    text-decoration: none;
+  }
+  .site-footer a:hover {
+    text-decoration: underline;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 32px;
+  }
+  .footer-brand {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+  .footer-brand img {
+    width: 220px;
+    height: auto;
+  }
+  .footer-brand p {
+    color: var(--on-navy-soft);
+    max-width: 36ch;
+  }
+  .footer-links,
+  .footer-contact {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .footer-head {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .footer-legal {
+    display: grid;
+    gap: 12px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .footer-legal p {
+    color: var(--on-navy-soft);
+    font-size: 13px;
+    max-width: 90ch;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero-grid,
+    .proof-grid,
+    .details-grid,
+    .register-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .hero-media {
+      order: -1;
+    }
+    .hero-chip {
+      left: 12px;
+      bottom: 12px;
+    }
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 20px;
+    }
+    .stat:nth-child(3) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .video-card video {
+      max-height: 480px;
+    }
+    .faq {
+      position: static;
+    }
+    .footer-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 720px) {
+    .inside-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .inside-row.flip .inside-media {
+      order: 0;
+    }
+    .inside-media img {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  @media (max-width: 520px) {
+    .brand img {
+      height: 40px;
+    }
+    .btn {
+      width: 100%;
+    }
+    .site-header .btn {
+      width: auto;
+    }
+    .footer-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
