@@ -1,13 +1,16 @@
 // Edit these values to change the video, booking calendar, application and contact details.
 
 // The Virtual Preview recording.
-// Paste a YouTube, Vimeo or Wistia link, or a direct .mp4 link.
+// Either a file in /public (like 'videos/virtual-preview.mp4'),
+// or a YouTube, Vimeo, Wistia or direct .mp4 link.
 // Leave empty to show the placeholder.
-export const PREVIEW_VIDEO_URL = '';
+export const PREVIEW_VIDEO_URL = 'videos/virtual-preview.mp4';
+export const PREVIEW_VIDEO_POSTER = 'videos/virtual-preview-poster.jpg';
+export const PREVIEW_VIDEO_CAPTIONS = 'videos/virtual-preview.vtt';
 
 // GoHighLevel calendar for the Initial Student Admissions Appointment (main goal of the page).
 export const BOOKING_URL =
-  'https://connect.californiadentalassistant.com/widget/booking/Zf3RkN0aNXTkeU70JhAx';
+  'https://connect.californiadentalassistant.com/widget/booking/cFcjguRB7b0OHXaZzIgS';
 
 // GoHighLevel Student Application (secondary action).
 export const APPLICATION_URL =
@@ -35,7 +38,8 @@ export function videoEmbed(url: string):
   | { kind: 'file'; src: string }
   | null {
   if (!url) return null;
-  if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return { kind: 'file', src: url };
+  if (/\.(mp4|webm|mov)(\?|$)/i.test(url))
+    return { kind: 'file', src: /^https?:\/\//.test(url) ? url : asset(url) };
   const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([\w-]{11})/);
   if (yt) return { kind: 'iframe', src: `https://www.youtube-nocookie.com/embed/${yt[1]}?rel=0&modestbranding=1` };
   const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);

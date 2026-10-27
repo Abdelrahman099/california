@@ -4,6 +4,8 @@ import {
   asset,
   videoEmbed,
   PREVIEW_VIDEO_URL,
+  PREVIEW_VIDEO_POSTER,
+  PREVIEW_VIDEO_CAPTIONS,
   BOOKING_URL,
   APPLICATION_URL,
   GHL_EMBED_SCRIPT,
@@ -16,55 +18,114 @@ import {
 
 const video = videoEmbed(PREVIEW_VIDEO_URL);
 const BOOK_LABEL = 'Book my admissions appointment';
+const LICENSE = '6085';
+const TUITION = '$4,500';
+
+// Chapters of the Virtual Preview recording (seconds from the start).
+const chapters = [
+  { t: 0, time: '0:00', label: 'Welcome and Dental Board approval' },
+  { t: 46, time: '0:46', label: 'Who the program is for' },
+  { t: 69, time: '1:09', label: 'Why dentistry, why now' },
+  { t: 139, time: '2:19', label: 'The 8 certifications you earn' },
+  { t: 168, time: '2:48', label: 'How the program works' },
+  { t: 286, time: '4:46', label: 'Student Success team' },
+  { t: 327, time: '5:27', label: 'Community and student portal' },
+  { t: 430, time: '7:10', label: 'Tuition' },
+  { t: 465, time: '7:45', label: 'Next steps' },
+];
 
 const stats = [
-  { value: '200+', label: 'Satisfied students across the state' },
-  { value: '99%', label: 'Course completion success rate' },
-  { value: '25+', label: 'Training locations in California' },
-  { value: '100+', label: 'Partnered dental clinics' },
+  { value: '8', label: 'Certifications and licenses included' },
+  { value: '300', label: 'Hours of self-paced online learning' },
+  { value: '3', label: 'Hands-on clinical days with licensed instructors' },
+  { value: '240', label: 'Internship hours in a real dental office' },
 ];
 
 const appointment = [
   {
     label: 'Your goals',
-    text: 'Tell your advisor where you are now and where you want to be. They’ll check that the program fits your schedule and timeline.',
+    text: 'Tell your advisor where you are now and where you want to be. They’ll check that the program fits your schedule.',
   },
   {
-    label: 'Your plan',
-    text: 'Pick the track and training location near you, and set a realistic start date and finish date.',
+    label: 'Your applications',
+    text: 'Your advisor sends you the student application and the scholarship application so you can get them started.',
   },
   {
-    label: 'Your cost',
-    text: 'Get your exact tuition, plus 0% financing, payment plans and any scholarships you qualify for.',
+    label: 'Your tuition',
+    text: 'Go over tuition and any scholarships you qualify for, so you know your final cost before you commit.',
   },
   {
-    label: 'Your next step',
-    text: 'Leave knowing exactly how to enroll. If you’re ready, your advisor can help you complete your application on the spot.',
+    label: 'Your start date',
+    text: 'Pick when you start. You can enroll as soon as the next day, depending on advisor availability.',
   },
+];
+
+const audience = [
+  {
+    title: 'Pre-dental students',
+    text: 'Heading toward dental hygiene or dental school? Get real chairside experience first.',
+  },
+  {
+    title: 'Recent high school graduates',
+    text: 'Age 17 or older and ready to start a healthcare career without years of school.',
+  },
+  {
+    title: 'Working adults',
+    text: 'Looking for a stable career with room to grow, on a schedule that works around your job.',
+  },
+];
+
+const whyNow = [
+  { value: '7%', label: 'Projected job growth for dental assistants over the next 10 years', src: 'U.S. Bureau of Labor Statistics' },
+  { value: '52,900', label: 'Dental assistant openings per year', src: 'U.S. Bureau of Labor Statistics' },
+  { value: '#1', label: 'California ranked the top state for dental assistant career growth', src: 'Dental Assisting National Board' },
+];
+
+const certifications = [
+  'Dental Practice Act',
+  'HIPAA',
+  'OSHA Bloodborne Pathogens',
+  'Sexual Harassment Prevention',
+  'AHA BLS / CPR',
+  'Infection Control',
+  'Radiation Safety',
+  'Dental Assistant Certification',
 ];
 
 const inside = [
   {
     n: '#1',
     title: 'How the program works',
-    body: 'The self-paced, hybrid format up close: 300+ course hours that mix online lessons with hands-on clinical training. You get 12 months of access, and most students finish in 8 to 15 weeks.',
-    points: ['Online coursework you do on your schedule', 'Hands-on clinical training near you', '40+ instructors, including dentists and RDAs'],
+    body: 'A self-paced program with three parts. You have 12 months of access, and the fastest students finish in 8 to 12 weeks.',
+    points: [
+      '300 hours online: videos, readings, quizzes and sessions with our team',
+      '3 hands-on classes at a partner dental office, usually Friday to Sunday, at 25+ locations',
+      '240-hour internship at a dental clinic, paid or unpaid, and we help you find one',
+    ],
     img: 'images/learn-xray.jpg',
     alt: 'A CDA Program student practicing dental X-ray positioning on a classmate.',
   },
   {
     n: '#2',
-    title: 'Your path to getting hired',
-    body: 'How students move from coursework into real dental offices, and how our job placement team helps you land your first role after you finish.',
-    points: ['Resume writing and interview prep', 'Connections with 100+ partnered dental clinics', 'A 1-on-1 dental buddy while you train'],
+    title: 'Support from start to finish',
+    body: 'You’re never on your own. Our Student Success team is with you for the full 12 months, even if you finish early.',
+    points: [
+      'Student Success team available 9 AM to 6 PM, Monday through Saturday',
+      'Weekly check-ins during your internship',
+      'A community of 200+ students sharing jobs, internships and scholarships',
+    ],
     img: 'images/learn-chairside.jpg',
     alt: 'A student in protective gear working chairside at a dental operatory.',
   },
   {
     n: '#3',
-    title: 'What it costs and how to pay',
-    body: 'An overview of tuition and the ways students make it fit their budget. Your admissions advisor gives you your exact numbers during your appointment.',
-    points: ['0% tuition financing', 'Monthly scholarships and student grants', 'Flexible payment plans'],
+    title: 'One tuition, everything included',
+    body: `Tuition is ${TUITION}, and it covers the whole program. No extra fees for classes or materials.`,
+    points: [
+      'All 300 online hours, 3 hands-on classes and the 240-hour internship',
+      'All 8 certifications and licenses',
+      'Materials, plus your own pair of scrubs',
+    ],
     img: 'images/learn-graduate.jpg',
     alt: 'A CDA Program graduate in scrubs ready for her first dental job.',
   },
@@ -91,35 +152,43 @@ const quotes = [
 const faqs = [
   {
     q: 'What is the Initial Student Admissions Appointment?',
-    a: 'A free 1-on-1 call with a CDA Program admissions advisor. You’ll go over your goals, your schedule, your training location, your tuition and financing options, and how to enroll.',
+    a: 'A free 1-on-1 call with a CDA Program admissions advisor. They’ll answer your questions, send you the student and scholarship applications, and help you plan your start date.',
   },
   {
     q: 'Does booking the appointment commit me to enrolling?',
-    a: 'No. The appointment is free and there’s no obligation. It’s how you get your personal plan and exact pricing before you decide.',
+    a: 'No. The appointment is free and there’s no obligation.',
   },
   {
-    q: 'Should I apply before my appointment?',
-    a: 'You don’t have to. Most students book the appointment first and their advisor walks them through the application. If you’re already sure, you can submit your application on this page and your advisor will review it with you.',
-  },
-  {
-    q: 'When can I start the program?',
-    a: 'Enrollment is open, so you can start whenever you’re ready. Access to your course takes 24 to 48 business hours after you register.',
-  },
-  {
-    q: 'How long does the program take?',
-    a: 'You get 12 months to complete the program. Because it’s self-paced, most students finish in 8 to 15 weeks.',
+    q: 'Is the program accredited?',
+    a: `The California Dental Assistant Program is an approved continuing education provider through the Dental Board of California, license #${LICENSE}.`,
   },
   {
     q: 'How much does the program cost?',
-    a: 'Cost depends on your course track and whether you qualify for financial aid. We offer 0% tuition financing, payment plans and scholarships. Your admissions advisor will give you exact pricing.',
+    a: `Tuition is ${TUITION}, and everything is included: online learning, 3 hands-on classes, the 240-hour internship, all 8 certifications and licenses, materials and scrubs. Ask your advisor about scholarships.`,
   },
   {
-    q: 'Is CPR certification included?',
-    a: 'Yes. CPR certification is part of the program, with classes that follow American Heart Association (AHA) guidelines.',
+    q: 'How long does the program take?',
+    a: 'It’s self-paced. You have 12 months of access, and the fastest students finish in 8 to 12 weeks.',
   },
   {
-    q: 'Will you help me find a job?',
-    a: 'Yes. Graduates get job placement assistance, including resume support, interview preparation and connections to local dental practices that are hiring.',
+    q: 'When are the hands-on classes?',
+    a: 'There are 3 hands-on classes in total. They take place at a partner dental office on its day off, usually Friday, Saturday or Sunday, and you can schedule them any time within your 12 months.',
+  },
+  {
+    q: 'Do I need to find my own internship?',
+    a: 'The program includes a 240-hour internship, which can be paid or unpaid. If you need help finding one, we’ll help you.',
+  },
+  {
+    q: 'Who can enroll?',
+    a: 'Anyone 17 or older, including pre-dental students, recent high school graduates and working adults. No dental experience needed.',
+  },
+  {
+    q: 'How soon can I start?',
+    a: 'You can enroll as soon as the next day (unless it’s a Sunday), depending on advisor availability. Book your admissions appointment to get started.',
+  },
+  {
+    q: 'Should I apply before my appointment?',
+    a: 'You don’t have to. Your advisor will send you the student application and scholarship application. If you’re already sure, you can start the application on this page.',
   },
 ];
 
@@ -158,30 +227,55 @@ const description =
           <span class="eyebrow">Dental Assistant Program · Virtual Preview</span>
           <h1>Is a dental career the change you’ve been waiting for?</h1>
           <p class="hero-sub">
-            Watch this free preview to see how you could be working in a dental office in as little as 8 to 15 weeks.
+            Watch this free 9-minute preview to see how you could become a dental assistant in as little as 8 to 12 weeks.
             Then book your admissions appointment to get your personal plan.
           </p>
         </div>
 
-        <div class="player" id="preview">
-          {video?.kind === 'iframe' && (
-            <iframe
-              src={video.src}
-              title="CDA Program Virtual Preview"
-              allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-              allowfullscreen
-            ></iframe>
-          )}
+        <div class={`watch ${video?.kind === 'file' ? 'has-chapters' : ''}`}>
+          <div class={`player ${video?.kind === 'file' ? 'player-file' : ''}`} id="preview">
+            {video?.kind === 'iframe' && (
+              <iframe
+                src={video.src}
+                title="CDA Program Virtual Preview"
+                allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                allowfullscreen
+              ></iframe>
+            )}
+            {video?.kind === 'file' && (
+              <>
+                <video id="preview-video" controls playsinline preload="metadata" poster={asset(PREVIEW_VIDEO_POSTER)}>
+                  <source src={video.src} type="video/mp4" />
+                  <track kind="captions" src={asset(PREVIEW_VIDEO_CAPTIONS)} srclang="en" label="English" />
+                </video>
+                <button class="play-overlay" type="button" data-play aria-label="Play the Virtual Preview">
+                  <img src={asset(PREVIEW_VIDEO_POSTER)} alt="" width="1112" height="622" />
+                  <span class="play" aria-hidden="true"></span>
+                  <span class="play-label">Watch the Virtual Preview · 8:46</span>
+                </button>
+              </>
+            )}
+            {!video && (
+              <div class="player-placeholder" style={`background-image:url(${asset('images/hero-clinic.jpg')})`}>
+                <span class="play" aria-hidden="true"></span>
+                <span class="player-note">Virtual Preview recording goes here</span>
+              </div>
+            )}
+          </div>
           {video?.kind === 'file' && (
-            <video controls playsinline preload="metadata" poster={asset('images/hero-clinic.jpg')}>
-              <source src={video.src} />
-            </video>
-          )}
-          {!video && (
-            <div class="player-placeholder" style={`background-image:url(${asset('images/hero-clinic.jpg')})`}>
-              <span class="play" aria-hidden="true"></span>
-              <span class="player-note">Virtual Preview recording goes here</span>
-            </div>
+            <nav class="chapters" aria-label="Jump to a part of the preview">
+              <span class="chapters-head">In this preview</span>
+              <ol>
+                {chapters.map((c) => (
+                  <li>
+                    <button type="button" data-seek={c.t}>
+                      <span class="chapter-time">{c.time}</span>
+                      <span>{c.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </nav>
           )}
         </div>
 
@@ -227,6 +321,43 @@ const description =
       </div>
     </section>
 
+    <!-- Who it's for + why now -->
+    <section class="section who">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Who this is for</span>
+          <h2>Built for busy people who want a stable healthcare career</h2>
+        </div>
+        <ul class="audience">
+          {audience.map((a) => (
+            <li>
+              <h3>{a.title}</h3>
+              <p>{a.text}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div class="why">
+          <div class="why-head">
+            <span class="eyebrow">Why now</span>
+            <h3>California needs dental assistants</h3>
+            <p>There’s a dental assistant shortage, and demand keeps growing.</p>
+          </div>
+          <dl class="why-stats">
+            {whyNow.map((w) => (
+              <div class="why-stat">
+                <dt>{w.value}</dt>
+                <dd>
+                  {w.label}
+                  <span class="why-src">Source: {w.src}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </section>
+
     <!-- Inside the preview -->
     <section class="section inside">
       <div class="wrap">
@@ -257,6 +388,23 @@ const description =
         <div class="center-cta">
           <a href="#book" class="btn btn-gold">{BOOK_LABEL} <span class="arrow" aria-hidden="true">→</span></a>
         </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="section certs">
+      <div class="wrap certs-grid">
+        <div class="certs-head">
+          <span class="eyebrow eyebrow-light">Included in your tuition</span>
+          <h2>All 8 certifications and licenses you need to work in California</h2>
+          <p>Every certification required to practice as a dental assistant in California is part of the program.</p>
+          <a href="#book" class="btn btn-gold">{BOOK_LABEL} <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <ul class="cert-list checks checks-light">
+          {certifications.map((c) => (
+            <li>{c}</li>
+          ))}
+        </ul>
       </div>
     </section>
 
@@ -380,7 +528,7 @@ const description =
     <div class="wrap footer-grid">
       <div class="footer-brand">
         <img src={asset('images/logo-lockup-white.png')} alt="California Dental Assistant Program" width="220" height="69" />
-        <p>Dental Board of California–approved continuing education provider.</p>
+        <p>Dental Board of California–approved continuing education provider, license #{LICENSE}.</p>
       </div>
       <nav class="footer-links" aria-label="Program">
         <span class="footer-head">Program</span>
@@ -416,6 +564,44 @@ const description =
 
   <script is:inline src={GHL_EMBED_SCRIPT}></script>
   <script is:inline>
+    // Virtual Preview player: poster overlay and chapter jumps.
+    (function () {
+      var v = document.getElementById('preview-video');
+      if (!v) return;
+      var overlay = document.querySelector('[data-play]');
+      var started = false;
+      function start(t) {
+        if (overlay) overlay.hidden = true;
+        if (typeof t === 'number') {
+          var seek = function () {
+            try { v.currentTime = t; } catch (e) {}
+          };
+          if (v.readyState >= 1) seek();
+          else v.addEventListener('loadedmetadata', seek, { once: true });
+        }
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+        started = true;
+      }
+      if (overlay) overlay.addEventListener('click', function () { start(); });
+      v.addEventListener('play', function () { if (overlay) overlay.hidden = true; });
+      var buttons = document.querySelectorAll('[data-seek]');
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          start(Number(b.getAttribute('data-seek')));
+          v.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+      // Highlight the chapter that is playing.
+      v.addEventListener('timeupdate', function () {
+        var cur = null;
+        buttons.forEach(function (b) {
+          if (v.currentTime >= Number(b.getAttribute('data-seek'))) cur = b;
+        });
+        buttons.forEach(function (b) { b.classList.toggle('is-current', b === cur && started); });
+      });
+    })();
+
     // Hide the phone booking bar while the calendar itself is on screen.
     (function () {
       var bar = document.querySelector('[data-mobile-bar]');
@@ -1158,6 +1344,250 @@ const description =
     }
     .footer-grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  /* Watch: player + chapters */
+  .watch {
+    width: 100%;
+    max-width: 1100px;
+    display: grid;
+    justify-items: center;
+  }
+  .watch.has-chapters {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    gap: 20px;
+    align-items: stretch;
+    text-align: left;
+  }
+  .player-file {
+    position: relative;
+    aspect-ratio: 970 / 720;
+    max-width: none;
+  }
+  .player-file video {
+    object-fit: contain;
+    background: #071d33;
+  }
+  .play-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 18px;
+    padding: 0;
+    border: 0;
+    background: #0f2b50;
+    cursor: pointer;
+    font: inherit;
+  }
+  .play-overlay img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .play-overlay .play,
+  .play-label {
+    position: relative;
+  }
+  .play-overlay:hover .play {
+    transform: scale(1.06);
+  }
+  .play-overlay .play {
+    transition: transform 0.25s ease;
+  }
+  .play-label {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(8, 39, 67, 0.85);
+    color: var(--on-navy);
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .chapters {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 20px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    min-width: 0;
+  }
+  .chapters-head {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .chapters ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+  .chapters button {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 10px;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    line-height: 1.35;
+    text-align: left;
+    cursor: pointer;
+  }
+  .chapters button:hover {
+    background: var(--wash);
+  }
+  .chapters button.is-current {
+    background: #fff4e0;
+    font-weight: 600;
+  }
+  .chapter-time {
+    color: var(--navy);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Who + why */
+  .audience {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .audience li {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    padding: 24px;
+    border-top: 4px solid var(--gold);
+    background: var(--wash);
+    border-radius: 0 0 var(--radius) var(--radius);
+  }
+  .audience h3 {
+    font-size: 21px;
+    color: var(--navy);
+  }
+  .why {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    margin-top: clamp(40px, 6vw, 72px);
+    padding-top: clamp(32px, 5vw, 56px);
+    border-top: 1px solid var(--line);
+  }
+  .why-head {
+    display: grid;
+    gap: 10px;
+  }
+  .why-head h3 {
+    font-size: clamp(24px, 2.8vw, 32px);
+    color: var(--navy);
+  }
+  .why-stats {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .why-stat {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+  }
+  .why-stat dt {
+    font-size: clamp(36px, 4.4vw, 52px);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+  }
+  .why-stat dd {
+    margin: 0;
+    display: grid;
+    gap: 6px;
+    color: var(--body);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .why-src {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* Certifications */
+  .certs {
+    background: var(--navy);
+    color: var(--on-navy);
+  }
+  .certs-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+  .certs-head {
+    display: grid;
+    gap: 18px;
+    justify-items: start;
+  }
+  .certs-head h2 {
+    color: var(--on-navy);
+    font-size: clamp(28px, 3.6vw, 40px);
+  }
+  .certs-head p {
+    color: var(--on-navy-soft);
+    font-size: 18px;
+  }
+  .cert-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+  }
+  .cert-list li {
+    padding-block: 16px;
+    padding-left: 34px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 17px;
+  }
+  .cert-list li::before {
+    top: 18px;
+  }
+  .cert-list li::after {
+    top: 22px;
+  }
+  @media (max-width: 900px) {
+    .watch.has-chapters,
+    .why,
+    .certs-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .audience,
+    .why-stats {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 520px) {
+    .cert-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .play-label {
+      font-size: 13px;
     }
   }
 </style>
