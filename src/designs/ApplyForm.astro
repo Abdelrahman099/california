@@ -1,0 +1,88 @@
+---
+// The one form on every design: the GoHighLevel form once its ID is set, otherwise a preview that sends nothing.
+import { GHL_FORM_BASE, HERO_FORM_ID } from '../config';
+import { APPLY } from './data';
+
+const { suffix = '' } = Astro.props;
+const frameId = `inline-${HERO_FORM_ID}${suffix}`;
+---
+
+<div class="af">
+  {HERO_FORM_ID ? (
+    <iframe
+      src={`${GHL_FORM_BASE}${HERO_FORM_ID}`}
+      style="width:100%;height:320px;border:none"
+      id={frameId}
+      data-layout="{'id':'INLINE'}"
+      data-trigger-type="alwaysShow"
+      data-trigger-value=""
+      data-activation-type="alwaysActivated"
+      data-activation-value=""
+      data-deactivation-type="neverDeactivate"
+      data-deactivation-value=""
+      data-form-name="Hero Admission Form"
+      data-layout-iframe-id={frameId}
+      data-form-id={HERO_FORM_ID}
+      title="Start your admission"
+    ></iframe>
+  ) : (
+    // Inputs have no names, so nothing is sent or put in the address.
+    <form action={APPLY} method="get">
+      <label>Full Name<input type="text" autocomplete="name" /></label>
+      <label>Phone<input type="tel" autocomplete="tel" /></label>
+      <label>Email<input type="email" autocomplete="email" /></label>
+      <button class="btn btn-gold" type="submit">Continue to Admission <span class="arrow" aria-hidden="true">&rarr;</span></button>
+      <p class="af-small">By continuing, you agree to be contacted about the program by phone, text or email.</p>
+      <p class="af-small af-note">Preview: form not connected</p>
+    </form>
+  )}
+</div>
+
+<style is:global>
+  .af form {
+    display: grid;
+    gap: 12px;
+  }
+  .af label {
+    display: grid;
+    gap: 4px;
+    color: var(--af-label, var(--ink));
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .af input {
+    width: 100%;
+    height: 46px;
+    padding: 0 12px;
+    border: 1px solid var(--af-line, #aab4c3);
+    border-radius: var(--af-radius, 4px);
+    background: #fff;
+    color: var(--ink);
+    font: 500 16px var(--font);
+  }
+  .af input:focus {
+    border-color: var(--navy);
+    outline: 2px solid var(--navy);
+    outline-offset: 0;
+  }
+  .af .btn {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 2px;
+    padding: 12px 14px;
+    border-radius: var(--af-radius, 4px);
+    background: var(--af-button, var(--gold));
+    color: var(--af-button-text, var(--navy-deep));
+    font-size: 14px;
+    letter-spacing: 0.06em;
+  }
+  .af-small {
+    color: var(--af-small, var(--muted));
+    font-size: 12.5px;
+    line-height: 1.4;
+  }
+  .af-note {
+    font-weight: 600;
+  }
+</style>

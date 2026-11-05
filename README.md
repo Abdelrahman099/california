@@ -1,6 +1,6 @@
 # CDA Program Virtual Preview
 
-Landing page for the California Dental Assistant Program's free Virtual Preview of the Dental Assistant Program. Visitors watch the recorded preview, then book their Initial Student Admissions Appointment (main goal). The Student Application is offered as a secondary option. Built with Astro and set up to deploy on Webflow Cloud.
+Landing page for the California Dental Assistant Program's free Virtual Preview of the Dental Assistant Program. Visitors watch the recorded preview, then book their Initial Student Admissions Appointment (main goal). Built with Astro and set up to deploy on Webflow Cloud.
 
 ## Edit common things
 
@@ -8,9 +8,8 @@ Landing page for the California Dental Assistant Program's free Virtual Preview 
 |---|---|
 | Virtual Preview video link | `PREVIEW_VIDEO_URL` in `src/config.ts` |
 | Admissions appointment calendar (GoHighLevel) | `BOOKING_URL` in `src/config.ts` |
-| Student Application (GoHighLevel) | `APPLICATION_URL` in `src/config.ts` |
 | Phone, email, address, main site link | `src/config.ts` |
-| Headlines, testimonials, FAQ, "Inside the preview" | top of `src/pages/index.astro` |
+| Headlines, quiz, program path, testimonials, FAQ | top of `src/pages/index.astro` |
 | Colors and fonts | `:root` block in `src/layouts/Layout.astro` |
 | Photos, logos, video | `public/images`, `public/videos` |
 

@@ -1,0 +1,86 @@
+---
+// What the designs share: the header and footer, plus a small switcher for comparing the earlier rounds.
+// Design 13 is the approved page, so it has no switcher.
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from './SiteHeader.astro';
+import SiteFooter from './SiteFooter.astro';
+import { asset, GHL_EMBED_SCRIPT, HERO_FORM_ID } from '../config';
+import headerHtml from '../home/header.html?raw';
+import footerHtml from '../home/footer.html?raw';
+
+// Pass header (clean, navy, badge or center) for the smaller header. Without it, the live header stays.
+const { n, name, header, footer: footerStyle } = Astro.props;
+const round = n >= 13 ? [] : n >= 7 ? [7, 8, 9, 10, 11, 12] : [1, 2, 3, 4, 5, 6];
+// The newsletter box leaves the footer, so the page only ever asks for one thing.
+const footer = footerHtml.replace(/<div class="cta-block">[\s\S]*?<\/iframe><\/div><\/div><\/div>/, '');
+---
+
+<Layout title={`Design ${n}: ${name} | California Dental Assistant Program`} description="A simpler main page design for the California Dental Assistant Program." preloader={false}>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons&display=block" />
+  <link rel="stylesheet" href={asset('home/chrome.css')} />
+  <slot name="head" />
+
+  {header ? <SiteHeader variant={header} /> : <Fragment set:html={headerHtml} />}
+  <main><slot /></main>
+  {footerStyle === 'new' ? <SiteFooter /> : <Fragment set:html={footer} />}
+
+  {round.length > 0 && <nav class="dx-switch" aria-label="Compare designs">
+    <a href={asset('designs/')}>All</a>
+    {round.map((i) => (
+      <a href={asset(`designs/${i}/`)} aria-current={i === n ? 'page' : undefined} aria-label={`Design ${i}`}>{i}</a>
+    ))}
+  </nav>}
+
+  {HERO_FORM_ID && <script is:inline src={GHL_EMBED_SCRIPT}></script>}
+  {header ? <script is:inline src={asset('home/site-header.js')}></script> : <script is:inline src={asset('home/home.js')}></script>}
+</Layout>
+
+<style is:global>
+  .dx-switch {
+    position: fixed;
+    left: 12px;
+    bottom: 12px;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 8px;
+    background: #111c2a;
+  }
+  .dx-switch a {
+    display: grid;
+    place-items: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .dx-switch a[aria-current] {
+    background: var(--gold);
+    color: var(--navy-deep);
+  }
+  /* The newsletter box is gone, so the footer no longer needs to make room for it. */
+  .footer-section {
+    margin-top: 0 !important;
+  }
+  .footer-black {
+    padding-top: 56px !important;
+  }
+  .footer-copyright-text-2 a {
+    color: #fff;
+  }
+  @media (max-width: 991px) {
+    .footer-block-40px.first-block .site-logo-wrapper,
+    .footer-block-40px.first-block .site-logo {
+      max-width: 130px;
+    }
+  }
+</style>

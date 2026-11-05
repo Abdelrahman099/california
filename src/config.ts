@@ -13,17 +13,19 @@ export const PREVIEW_VIDEO_STREAM = 'videos/preview-hls/index.m3u8';
 export const BOOKING_URL =
   'https://connect.californiadentalassistant.com/widget/booking/cFcjguRB7b0OHXaZzIgS';
 
-// GoHighLevel Student Application (secondary action).
-export const APPLICATION_URL =
-  'https://connect.californiadentalassistant.com/widget/survey/8OH1bTjr2aiv5sb7EpMB';
 
 export const GHL_EMBED_SCRIPT =
   'https://connect.californiadentalassistant.com/js/form_embed.js';
 
+// The GoHighLevel form shown in the main page's hero. Paste its form ID here (see GOHIGHLEVEL-FORM-SETUP.md).
+// While this is empty the hero shows a design preview that sends nothing.
+export const HERO_FORM_ID = '';
+export const GHL_FORM_BASE = 'https://connect.californiadentalassistant.com/widget/form/';
+
 export const MAIN_SITE = 'https://www.californiadentalassistant.com';
 export const PHONE = '(916) 249-1253';
 export const PHONE_HREF = 'tel:+19162491253';
-export const EMAIL = 'info@californiadentalassistant.com';
+export const EMAIL = 'hello@californiadentalassistant.com';
 export const ADDRESS = '5015 Madison Ave #399, Sacramento, CA 95841';
 
 // Prefixes a file in /public with the path Webflow Cloud mounts the app at.

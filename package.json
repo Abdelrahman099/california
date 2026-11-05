@@ -13,7 +13,11 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.4.2",
+    "@astrojs/react": "^6.0.6",
+    "@cloudflare/vite-plugin": "^1.65.0",
     "astro": "^7.4.2",
+    "gsap": "3.15.0",
     "hls.js": "1.6.16"
   }
 }

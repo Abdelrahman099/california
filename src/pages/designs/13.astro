@@ -1,0 +1,842 @@
+---
+// Design 13, Real Graduates. One idea carries the page: real people holding real certificates, not stock or crowded class photos.
+import Shell from '../../designs/Shell.astro';
+import ApplyForm from '../../designs/ApplyForm.astro';
+import { asset, EMAIL, PHONE, PHONE_HREF } from '../../config';
+import { benefits, CDN, faqs2, numbers, partners, promises, reasons, regions } from '../../designs/data';
+
+const photo = (file: string) => `${CDN}/${file}`;
+const faces = {
+  osamah: { src: photo('66d57eb2f8a331a9126a5c55_Osamah-Al%20Janabi.jpg'), name: 'Osamah Al-Janabi', pos: '50% 40%' },
+  yadira: { src: photo('66d031af932bd65e9f34d5e6_Student%20Pic.jpg'), name: 'Yadira Martinez', pos: '50% 60%' },
+  muhammad: { src: photo('66d031afefe6b9372b19c9ee_Student%20Pic%20(1).jpg'), name: 'Muhammad Afzal', pos: '50% 45%' },
+  nur: { src: photo('66d02c3a6cfab262f261c9ba_Student%20Picture%20(3).jpg'), name: 'Nur Abouzid', pos: '50% 15%' },
+  arshaan: { src: photo('66d57f3cf1639484ada80abb_Arshaan.jpg'), name: 'Arshaan Parmar', pos: '35% 25%' },
+  certificate: { src: photo('6a7e23ac0ef9fdf7c825f6b0_image%20(8).png'), name: 'CDA Program graduate', pos: '20% 50%' },
+};
+const colA = [faces.osamah, faces.yadira, faces.certificate];
+const colB = [faces.muhammad, faces.arshaan, faces.nur];
+
+const steps = [
+  { n: '01', title: 'Learn online', text: '300+ course hours, self paced, with 12 months of access. Complete the program even with your busy schedule.' },
+  { n: '02', title: 'Train hands-on', text: 'Online and clinical hands-on training at 25+ locations, taught near you by dentists and registered dental assistants.' },
+  { n: '03', title: 'Launch your career', text: 'Finish in 8–15 weeks with state-approved certificates, and get job placement help from 100+ partnered clinics.' },
+];
+
+// The live site's own icons, in the same order as the promises.
+const icons = ["https://cdn.prod.website-files.com/66ccd1ea2c9c64cd900a5d93/66cd059d0de821d3b4d38f0d_Dental_Buddy.png", "https://cdn.prod.website-files.com/66ccd1ea2c9c64cd900a5d93/66cd059d4b9ed77472afe1ac_Self_Paced.png", "https://cdn.prod.website-files.com/66ccd1ea2c9c64cd900a5d93/66cd059d5ced668f942c1785_Online_Community.png"];
+
+// Word for word from the program's Google reviews.
+const stories = [
+  { text: 'It gave me the confidence and skills I needed to start my career in dental assisting.', name: 'Jayleen S.' },
+  { text: 'The instructors were supportive, clear, and very knowledgeable.', name: 'Rupina B.' },
+  { text: 'I thoroughly enjoyed the certification process and felt well-prepared for my career.', name: 'Yousif A.' },
+];
+---
+
+<Shell n={13} name="Real Graduates" header="navy" footer="new">
+  <link slot="head" rel="stylesheet" href={asset('reviews/reviews.css')} />
+
+  <div class="s">
+    <!-- Hero: the outcome in one line, and the proof beside it. -->
+    <section class="s-hero">
+      <div class="s-hero-copy">
+        <h1>Your dental career is <em>8–15 weeks</em> away.</h1>
+        <p class="s-hero-lead">Learn online at your own pace, train hands-on near you, and graduate with state-approved certificates.</p>
+        <div class="s-actions">
+          <a class="s-btn" href="#apply">Start Your Admission <span aria-hidden="true">&rarr;</span></a>
+          <a class="s-call" href={PHONE_HREF}>Or call {PHONE}</a>
+        </div>
+        <p class="s-proof"><span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.0 from 127 Google reviews</p>
+      </div>
+      <div class="s-wall" aria-label="Graduates of the program">
+        {[colA, colB].map((col, c) => (
+          <div class={`s-col s-col-${c + 1}`}>
+            <ul>
+              {[...col, ...col].map((f, i) => (
+                <li aria-hidden={i >= col.length ? 'true' : undefined}>
+                  <img src={f.src} alt={i >= col.length ? '' : f.name} style={`object-position:${f.pos}`} />
+                  <span>{f.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Hired: answers "will this lead to a job?" before anything else is asked. -->
+    <section class="s-hired" aria-label="Trusted dental offices">
+      <p>Get hired with trusted dental offices</p>
+      <ul>
+        {partners.map((l) => <li><img src={l.src} alt={l.name} loading="lazy" /></li>)}
+      </ul>
+    </section>
+
+    <!-- Steps: three cards, the way the reference shows them, in CDA's navy and gold. -->
+    <section class="s-steps">
+      <h2>Learning with the California Dental Assistant Program</h2>
+      <p class="s-steps-sub">You do these three things.</p>
+      <ol class="s-cards">
+        {steps.map((c) => (
+          <li>
+            <span class="s-card-num">{c.n}</span>
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- Map: removes the "is it near me?" objection, and the buttons make it personal. -->
+    <section class="s-where">
+      <div class="s-where-head">
+        <h2>Find your closest location.</h2>
+        <div class="s-picker" data-picker>
+          <div class="s-regions" role="group" aria-label="Choose your region">
+            {regions.map((r, i) => (
+              <button type="button" data-region={r.region} data-cities={r.cities.join(', ')} aria-pressed={i === 0 ? 'true' : 'false'}>{r.region}</button>
+            ))}
+          </div>
+          <p class="s-cities" aria-live="polite" data-cities-out>{regions[0].cities.join(', ')}</p>
+        </div>
+      </div>
+      <section class="proof" id="reviews" data-reviews data-bare data-photo={asset('images/clinic-group.jpg')} data-logo={asset('images/logo-seal.png')}></section>
+    </section>
+
+    <!-- Promises: the live site's three reasons, in the same cards. -->
+    <section class="s-promises">
+      <ul class="s-cards s-cards-alt">
+        {promises.map((p, i) => (
+          <li>
+            <span class="s-card-icon"><img src={icons[i]} width="500" height="500" alt="" loading="lazy" /></span>
+            <h3>{i === 0 ? p.label : `${p.figure} ${p.label}`}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Stories: a real person talking beats any claim we can write. -->
+    <section class="s-stories">
+      <div class="s-video">
+        <video controls preload="none" playsinline poster={asset('videos/testimonial-poster.jpg')} aria-label="A student talks about the program">
+          <source src={asset('videos/testimonial.mp4')} type="video/mp4" />
+        </video>
+      </div>
+      <div class="s-quotes">
+        <h2>What our students say</h2>
+        {stories.map((q) => (
+          <figure>
+            <blockquote>"{q.text}"</blockquote>
+            <figcaption><span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span> {q.name}, Google review</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <!-- Why: all the detail is here for people who want it, folded so it never slows anyone else down. -->
+    <section class="s-why">
+      <div class="s-why-side">
+        <h2>Why Pick CDA Program?</h2>
+        <dl>
+          {numbers.map((n) => (
+            <div>
+              <dd>{n.value}</dd>
+              <dt>{n.label}</dt>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="s-why-list">
+        {reasons.map((r) => (
+          <details>
+            <summary>{r.title}</summary>
+            <p>{r.text}</p>
+          </details>
+        ))}
+        <ul>
+          {benefits.map((b) => <li><strong>{b.title}</strong> {b.text}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Apply: one ask, next to a graduate, so the form feels like the first step to that photo. -->
+    <section class="s-apply" id="apply">
+      <figure>
+        <img src={faces.arshaan.src} alt="Arshaan Parmar holding his certificate beside his instructor." loading="lazy" />
+        <figcaption>Arshaan Parmar, proud graduate</figcaption>
+      </figure>
+      <div class="s-apply-copy">
+        <h2>Start Your Admission</h2>
+        <p class="s-apply-lead">Next, you'll pick your admission appointment.</p>
+        <ApplyForm />
+        <p class="s-contact">Questions? Call <a href={PHONE_HREF}>{PHONE}</a> or email <a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+      </div>
+    </section>
+
+    <section class="s-faq">
+      <h2>Questions, answered.</h2>
+      <div>
+        {faqs2.map(([q, a]) => (
+          <details>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <script is:inline src={asset('reviews/reviews-data.js')}></script>
+  <script is:inline src={asset('reviews/ca-counties.js')}></script>
+  <script is:inline src={asset('reviews/reviews.js')}></script>
+  <script is:inline>
+    (function () {
+      // Region buttons mark that region's cities and zoom the map to its first one.
+      var buttons = [].slice.call(document.querySelectorAll('[data-picker] [data-region]'));
+      var pins = [].slice.call(document.querySelectorAll('.gr-loc'));
+      var places = window.CDA_REVIEW_DATA.locations;
+      var out = document.querySelector('[data-cities-out]');
+      function mark(btn) {
+        var region = btn.getAttribute('data-region');
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+        pins.forEach(function (p, k) { p.classList.toggle('is-region', places[k].region === region); });
+        out.textContent = btn.getAttribute('data-cities');
+      }
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          mark(b);
+          var region = b.getAttribute('data-region');
+          for (var k = 0; k < places.length; k++) {
+            if (places[k].region === region) { pins[k].click(); break; }
+          }
+        });
+      });
+      if (buttons[0]) mark(buttons[0]);
+
+    })();
+  </script>
+</Shell>
+
+<style is:global>
+  .s {
+    --s-display: var(--font);
+    --s-edge: max(20px, calc((100vw - 1320px) / 2));
+    --s-paper: #f7f4ee;
+    overflow-x: clip;
+  }
+  .s h1,
+  .s h2,
+  .s h3 {
+    font-family: var(--s-display);
+    text-wrap: balance;
+  }
+  .s h2 {
+    color: var(--navy-deep);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  /* Hero */
+  .s-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: clamp(24px, 4vw, 64px);
+    height: clamp(620px, calc(100vh - 84px), 860px);
+    padding-left: var(--s-edge);
+    padding-right: var(--s-edge);
+    background: var(--navy-deep);
+  }
+  .s-hero-copy {
+    align-self: center;
+    padding-block: 28px;
+  }
+  .s-hero h1 {
+    color: #fff;
+    font-size: clamp(48px, 7.2vw, 112px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+  }
+  .s-hero em {
+    color: var(--gold);
+    font-style: normal;
+    white-space: nowrap;
+  }
+  .s-hero-lead {
+    max-width: 31em;
+    margin-top: 22px;
+    color: #dbe5ef;
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.45;
+  }
+  .s-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 24px;
+    margin-top: 28px;
+  }
+  .s-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 62px;
+    padding: 0 30px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .s-btn:hover {
+    background: var(--gold-hover);
+  }
+  .s-call {
+    color: #fff;
+    font-weight: 600;
+  }
+  .s-proof {
+    margin-top: 22px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .s-proof span {
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+  .s-wall {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    height: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent);
+  }
+  .s-col ul {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    animation: s-rise 42s linear infinite;
+  }
+  .s-col-2 ul {
+    animation-direction: reverse;
+  }
+  .s-wall:hover .s-col ul {
+    animation-play-state: paused;
+  }
+  @keyframes s-rise {
+    to {
+      transform: translateY(calc(-50% - 7px));
+    }
+  }
+  .s-col li {
+    position: relative;
+  }
+  .s-col img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--navy);
+  }
+  .s-col span {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    padding: 4px 9px;
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* Hired */
+  .s-hired {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(20px, 4vw, 56px);
+    padding: 24px var(--s-edge);
+    background: var(--navy);
+  }
+  .s-hired p {
+    max-width: 13em;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .s-hired ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .s-hired img {
+    width: auto;
+    height: 34px;
+    max-width: 150px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  /* Steps and promises: three cards with a curve in the corner and a soft glow, in CDA's colours */
+  .s-steps {
+    padding: clamp(48px, 6vw, 88px) var(--s-edge);
+    background: #fff;
+  }
+  .s-steps-sub {
+    margin-top: 14px;
+    color: var(--ink);
+    font-size: clamp(19px, 1.6vw, 23px);
+  }
+  .s-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: clamp(24px, 3vw, 36px) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .s-cards li {
+    --c-base: #ffe2b5;
+    --c-curve: #fdbf60;
+    --c-glow: rgba(247, 173, 60, 0.65);
+    --c-text: var(--navy-deep);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 330px;
+    padding: 26px 28px 36px;
+    border-radius: 16px;
+    background: var(--c-base);
+    color: var(--c-text);
+  }
+  .s-cards li:nth-child(2) {
+    --c-base: var(--navy);
+    --c-curve: #1f5c94;
+    --c-glow: rgba(70, 137, 196, 0.6);
+    --c-text: #fff;
+  }
+  .s-cards li:nth-child(3) {
+    --c-base: var(--gold);
+    --c-curve: #ffd896;
+    --c-glow: rgba(240, 138, 36, 0.75);
+  }
+  .s-cards li::before {
+    content: '';
+    position: absolute;
+    top: -8%;
+    right: -6%;
+    z-index: -1;
+    width: 52%;
+    height: 62%;
+    border-radius: 0 0 0 100%;
+    background: linear-gradient(200deg, var(--c-curve) 25%, transparent 115%);
+  }
+  .s-cards li::after {
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: -6%;
+    bottom: -34%;
+    z-index: -1;
+    height: 56%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, var(--c-glow), transparent);
+  }
+  .s-card-num {
+    display: block;
+    font-size: clamp(60px, 6vw, 84px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .s-cards h3 {
+    margin-top: clamp(40px, 5vw, 72px);
+    color: inherit;
+    font-size: clamp(23px, 2vw, 28px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+  .s-cards p {
+    margin-top: 10px;
+    color: inherit;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+  .s-promises {
+    padding: clamp(48px, 6vw, 88px) var(--s-edge);
+  }
+  .s-promises .s-cards {
+    margin-top: 0;
+  }
+  .s-cards-alt li:nth-child(1) {
+    --c-base: var(--navy);
+    --c-curve: #1f5c94;
+    --c-glow: rgba(70, 137, 196, 0.6);
+    --c-text: #fff;
+  }
+  .s-cards-alt li:nth-child(2) {
+    --c-base: var(--gold);
+    --c-curve: #ffd896;
+    --c-glow: rgba(240, 138, 36, 0.75);
+    --c-text: var(--navy-deep);
+  }
+  .s-cards-alt li:nth-child(3) {
+    --c-base: #ffe2b5;
+    --c-curve: #fdbf60;
+    --c-glow: rgba(247, 173, 60, 0.65);
+    --c-text: var(--navy-deep);
+  }
+  .s-card-icon {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .s-cards-alt li:nth-child(n + 2) .s-card-icon {
+    background: var(--navy-deep);
+  }
+  .s-card-icon img {
+    width: 44px;
+    height: 44px;
+  }
+  .s-cards-alt h3 {
+    margin-top: 28px;
+  }
+  .s-cards-alt p {
+    font-size: 16px;
+  }
+
+  /* Where */
+  .s-where {
+    padding-top: clamp(56px, 7vw, 104px);
+    background: var(--s-paper);
+  }
+  .s-where-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: end;
+    gap: clamp(20px, 4vw, 56px);
+    width: min(100% - 40px, 1160px);
+    margin: 0 auto 28px;
+  }
+  .s-regions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .s-regions button {
+    min-height: 42px;
+    padding: 0 15px;
+    border: 1.5px solid var(--navy-deep);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--navy-deep);
+    cursor: pointer;
+    font: 600 15px var(--font);
+  }
+  .s-regions button[aria-pressed='true'] {
+    background: var(--navy-deep);
+    color: #fff;
+  }
+  .s-cities {
+    margin-top: 12px;
+    color: var(--navy-deep);
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .s-where .gr {
+    padding-block: 0 clamp(56px, 7vw, 104px);
+    background: none;
+  }
+  .s-where .proof {
+    padding: 0;
+    background: none;
+  }
+  .s .gr-loc.is-region span {
+    width: 16px;
+    height: 16px;
+    background: var(--navy);
+  }
+
+  /* Stories */
+  .s-stories {
+    display: grid;
+    grid-template-columns: minmax(280px, 400px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(32px, 7vw, 112px);
+    padding: clamp(44px, 5vw, 72px) var(--s-edge);
+  }
+  .s-video video {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 600px;
+    object-fit: cover;
+    background: var(--navy-deep);
+  }
+  .s-quotes figure {
+    margin: clamp(22px, 2.6vw, 36px) 0 0;
+    padding-top: clamp(18px, 2vw, 26px);
+    border-top: 1px solid var(--line);
+  }
+  .s-quotes blockquote {
+    margin: 0;
+    color: var(--navy-deep);
+    font-family: var(--s-display);
+    font-size: clamp(24px, 2.6vw, 38px);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+  .s-quotes figcaption {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .s-quotes figcaption span {
+    color: #c97f0b;
+    letter-spacing: 0.08em;
+  }
+
+  /* Why */
+  .s-why {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: clamp(32px, 6vw, 96px);
+    padding: clamp(44px, 5vw, 72px) var(--s-edge);
+    background: var(--navy-deep);
+  }
+  .s .s-why h2 {
+    color: #fff;
+  }
+  .s-why dl {
+    display: grid;
+    gap: 22px;
+    margin: 32px 0 0;
+  }
+  .s-why dd {
+    margin: 0;
+    color: var(--gold);
+    font-family: var(--s-display);
+    font-size: clamp(34px, 3.4vw, 46px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .s-why dt {
+    margin-top: 4px;
+    color: #fff;
+    font-size: 16px;
+  }
+  .s-why details {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+  }
+  .s-why summary {
+    padding-block: 18px;
+    color: #fff;
+    cursor: pointer;
+    font-family: var(--s-display);
+    font-size: clamp(21px, 2vw, 28px);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+  .s-why details p {
+    padding-bottom: 18px;
+    color: #dbe5ef;
+    line-height: 1.5;
+  }
+  .s-why ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 24px;
+    margin: 28px 0 0;
+    padding: 0;
+    list-style: none;
+    color: #dbe5ef;
+    font-size: 15.5px;
+    line-height: 1.4;
+  }
+  .s-why strong {
+    display: block;
+    color: var(--gold);
+  }
+
+  /* Apply */
+  .s-apply {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    background: var(--s-paper);
+  }
+  .s-apply figure {
+    position: relative;
+    margin: 0;
+    min-height: 620px;
+    overflow: hidden;
+    background: var(--navy-deep);
+  }
+  .s-apply figure img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 40% 22%;
+  }
+  .s-apply figcaption {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    padding: 6px 12px;
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .s-apply {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .s-apply::after {
+    content: '';
+    position: absolute;
+    top: -6%;
+    right: -4%;
+    z-index: -1;
+    width: 34%;
+    height: 112%;
+    border-radius: 0 0 0 100%;
+    background: linear-gradient(200deg, #ffe2b5 20%, transparent 110%);
+  }
+  .s-apply-copy {
+    align-self: center;
+    width: min(100%, 560px);
+    padding: clamp(36px, 5vw, 72px) clamp(20px, 5vw, 64px);
+  }
+  .s-apply-lead {
+    margin: 12px 0 22px;
+    color: var(--ink);
+    font-size: 19px;
+  }
+  .s-apply .af .btn {
+    min-height: 60px;
+    border-radius: 999px;
+    background: var(--navy-deep);
+    color: #fff;
+    font-size: 15px;
+  }
+  .s-contact {
+    margin-top: 16px;
+    color: var(--ink);
+    font-size: 15.5px;
+    overflow-wrap: anywhere;
+  }
+  .s-contact a {
+    font-weight: 700;
+  }
+
+  /* FAQ */
+  .s-faq {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: clamp(24px, 5vw, 72px);
+    padding: clamp(44px, 5vw, 72px) var(--s-edge);
+  }
+  .s-faq details {
+    border-bottom: 1px solid #c8d2de;
+  }
+  .s-faq summary {
+    padding-block: 16px;
+    color: var(--navy-deep);
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: 600;
+  }
+  .s-faq details p {
+    padding-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 991px) {
+    .s-hero {
+      display: block;
+      height: auto;
+      padding: 0;
+    }
+    .s-hero-copy {
+      padding: 32px 20px 28px;
+    }
+    .s-wall {
+      display: block;
+      height: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    .s-col-2 {
+      display: none;
+    }
+    .s-col ul {
+      grid-auto-flow: column;
+      grid-auto-columns: 210px;
+      width: max-content;
+      padding-bottom: 20px;
+      animation-name: s-slide;
+    }
+    @keyframes s-slide {
+      to {
+        transform: translateX(calc(-50% - 7px));
+      }
+    }
+    .s-hired,
+    .s-cards,
+    .s-where-head,
+    .s-stories,
+    .s-why,
+    .s-apply,
+    .s-faq {
+      grid-template-columns: 1fr;
+    }
+    .s-cards li {
+      min-height: 0;
+    }
+    .s-apply figure {
+      min-height: 340px;
+    }
+    .s-video {
+      width: min(100%, 360px);
+    }
+  }
+  @media (max-width: 767px) {
+    .s-btn {
+      justify-content: center;
+      width: 100%;
+    }
+    .s-why ul {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .s-col ul {
+      animation: none;
+    }
+  }
+</style>

@@ -1,5 +1,16 @@
 {
   "cloud": {
-    "framework": "astro"
-  }
+    "framework": "astro",
+    "app_id": "8a2a2f85-e71d-40cb-8571-6c1ded0aa005"
+  },
+  "devlink-export": {
+    "rootDir": "./webflow",
+    "components": ".*",
+    "componentGroups": ".*",
+    "ts": false,
+    "cssScopes": true,
+    "relativeHrefRoot": "/"
+  },
+  "region": "us",
+  "siteId": "66ccd1ea2c9c64cd900a5d93"
 }

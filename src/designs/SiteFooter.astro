@@ -1,0 +1,117 @@
+---
+// A compact footer with the same links as the live site.
+import { asset, MAIN_SITE, PHONE, PHONE_HREF } from '../config';
+
+const program = [
+  ['About us', `${MAIN_SITE}/about`],
+  ['Departments', `${MAIN_SITE}/departments`],
+  ['Courses', `${MAIN_SITE}/courses`],
+  ['Shop', `${MAIN_SITE}/shop`],
+  ['Contact us', `${MAIN_SITE}/contact-us`],
+  ['Accreditation', `${MAIN_SITE}/accreditation-and-approvals-california-dental-assistant-program-cda-program`],
+];
+const quick = [
+  ['FAQ', `${MAIN_SITE}/faq`],
+  ['Student Portal', 'https://portal.californiadentalassistant.com/login'],
+  ['Help', 'https://help.californiadentalassistant.com/'],
+  ['Employees', 'https://portal.californiadentalassistant.com'],
+];
+const social = [
+  ['Facebook', 'https://www.facebook.com/profile.php?id=100094846545275'],
+  ['Instagram', 'https://www.instagram.com/cdaprogram/'],
+  ['X', 'https://x.com/cdaprogram'],
+  ['LinkedIn', 'https://www.linkedin.com/company/caldaprogram/'],
+];
+---
+
+<footer class="sf">
+  <div class="sf-top">
+    <div class="sf-brand">
+      <img src={asset('images/logo-seal.png')} width="500" height="500" alt="California Dental Assistant Program seal" loading="lazy" />
+      <p>Shaping the future of dental care.</p>
+      <a href={PHONE_HREF}>{PHONE}</a>
+      <a href="mailto:info@californiadentalassistant.com">info@californiadentalassistant.com</a>
+    </div>
+    <nav aria-label="CDA Program">
+      <h2>CDA Program</h2>
+      {program.map(([l, h]) => <a href={h}>{l}</a>)}
+    </nav>
+    <nav aria-label="Quick links">
+      <h2>Quick Links</h2>
+      {quick.map(([l, h]) => <a href={h}>{l}</a>)}
+    </nav>
+    <nav aria-label="Follow us">
+      <h2>Follow us</h2>
+      {social.map(([l, h]) => <a href={h} target="_blank" rel="noopener">{l}</a>)}
+    </nav>
+  </div>
+  <div class="sf-bottom">
+    <span>© California Dental Assistant Program 2025</span>
+    <span>Mailing Address 5015 Madison Ave 399 Sacramento CA 95841</span>
+    <span><a href={`${MAIN_SITE}/policies/privacy-policy`}>Privacy Policy</a> · <a href={`${MAIN_SITE}/policies/terms-and-conditions`}>Terms and Conditions</a></span>
+  </div>
+</footer>
+
+<style is:global>
+  .sf {
+    padding: clamp(40px, 5vw, 64px) var(--s-edge, max(20px, calc((100vw - 1280px) / 2))) 24px;
+    background: #06203a;
+    color: #fff;
+  }
+  .sf-top {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+  }
+  .sf-brand img {
+    width: 92px;
+    height: 92px;
+  }
+  .sf-brand p {
+    margin: 12px 0 10px;
+    color: #c3d0de;
+  }
+  .sf a {
+    display: block;
+    padding-block: 4px;
+    color: #fff;
+    font-size: 15px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .sf a:hover {
+    text-decoration: underline;
+  }
+  .sf h2 {
+    margin-bottom: 8px;
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .sf-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 6px 24px;
+    margin-top: clamp(28px, 4vw, 44px);
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    color: #c3d0de;
+    font-size: 13.5px;
+  }
+  .sf-bottom a {
+    display: inline;
+    color: #fff;
+    font-size: inherit;
+  }
+  @media (max-width: 767px) {
+    .sf-top {
+      grid-template-columns: 1fr 1fr;
+    }
+    .sf-brand {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

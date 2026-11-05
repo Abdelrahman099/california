@@ -4,8 +4,9 @@ import { asset } from '../config';
 interface Props {
   title: string;
   description: string;
+  preloader?: boolean;
 }
-const { title, description } = Astro.props;
+const { title, description, preloader = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,6 +28,59 @@ const { title, description } = Astro.props;
     />
   </head>
   <body>
+    <!-- Seal Draw preloader: covers the page until it has loaded (min 3s so the seal finishes drawing, max 8s) -->
+    {preloader && <Fragment>
+    <div class="preloader" id="preloader" role="status" aria-live="polite">
+<svg class="cda-seal" viewBox="-6 -6 112 112" aria-hidden="true">
+      <g class="seal">
+        <circle class="disc" cx="50" cy="50" r="50" pathLength="100" transform="rotate(-90 50 50)"/>
+        <circle class="ring" cx="50" cy="50" r="47.05" pathLength="100" transform="rotate(-90 50 50)"/>
+        <circle class="inner" cx="50" cy="50" r="31.55" pathLength="100" transform="rotate(-90 50 50)"/>
+        <path id="cda-arc-top" d="M13.4 50A36.6 36.6 0 0 1 86.6 50" fill="none"/>
+        <path id="cda-arc-bottom" d="M9.3 50A40.7 40.7 0 0 0 90.7 50" fill="none"/>
+        <g class="words">
+          <text class="top"><textPath href="#cda-arc-top" startOffset="50%" text-anchor="middle">CALIFORNIA</textPath></text>
+          <text class="bottom"><textPath href="#cda-arc-bottom" startOffset="50%" text-anchor="middle">DENTAL ASSISTANT PROGRAM</textPath></text>
+          <circle class="dot" cx="12.2" cy="50" r="2.1"/>
+          <circle class="dot" cx="87.8" cy="50" r="2.1"/>
+        </g>
+        <g class="tooth">
+          <path pathLength="100" d="M58.03 32.11C58.38 32.08 58.75 32.06 59.11 32.08C59.46 32.11 59.74 32.13 60.16 32.26C60.58 32.4 61.17 32.61 61.63 32.87C62.1 33.13 62.62 33.51 62.94 33.84C63.26 34.17 63.4 34.45 63.55 34.86C63.7 35.26 63.78 35.55 63.82 36.28C63.86 37.01 63.85 38.53 63.78 39.23C63.7 39.92 63.63 39.96 63.36 40.44C63.1 40.92 62.55 41.72 62.19 42.13C61.84 42.54 61.64 42.62 61.25 42.87C60.85 43.13 60.46 43.38 59.81 43.65C59.17 43.92 59.14 44.15 57.38 44.47C55.62 44.8 51.23 45.28 49.27 45.6C47.31 45.91 46.64 46.11 45.62 46.37C44.6 46.63 43.87 46.89 43.15 47.15C42.44 47.41 41.84 47.69 41.34 47.94C40.84 48.2 40.52 48.39 40.13 48.68C39.74 48.97 39.35 49.28 39.01 49.71C38.67 50.13 38.29 50.99 38.07 51.24C37.85 51.49 38.06 51.96 37.68 51.23C37.3 50.51 36.22 48.05 35.78 46.89C35.34 45.72 35.25 45.28 35.04 44.24C34.84 43.21 34.6 41.53 34.56 40.7C34.52 39.86 34.67 39.72 34.79 39.25C34.91 38.77 34.97 38.46 35.27 37.84C35.57 37.22 36.23 36.04 36.58 35.51C36.94 34.98 37.12 34.92 37.42 34.65C37.71 34.38 37.95 34.16 38.36 33.91C38.78 33.65 39.29 33.34 39.91 33.11C40.53 32.89 41.23 32.65 42.07 32.54C42.91 32.44 44 32.38 44.92 32.48C45.84 32.58 46.96 32.92 47.58 33.13C48.21 33.34 48.35 33.45 48.67 33.74C48.99 34.03 49.35 34.46 49.5 34.86C49.65 35.26 49.62 35.8 49.57 36.14C49.53 36.48 49.4 36.68 49.22 36.9C49.04 37.11 48.8 37.31 48.51 37.42C48.23 37.54 47.87 37.6 47.53 37.6C47.18 37.61 46.72 37.52 46.45 37.46C46.18 37.39 46.14 37.4 45.91 37.21C45.68 37.02 45.23 36.41 45.06 36.32C44.89 36.23 44.87 36.42 44.9 36.66C44.93 36.9 45.02 37.41 45.23 37.76C45.45 38.11 45.83 38.52 46.19 38.76C46.54 39 46.99 39.12 47.38 39.19C47.76 39.27 48.14 39.27 48.5 39.23C48.86 39.19 49.14 39.15 49.54 38.97C49.93 38.79 50.37 38.58 50.88 38.16C51.39 37.74 51.98 37.16 52.6 36.44C53.22 35.72 54.14 34.4 54.62 33.84C55.1 33.28 55.08 33.33 55.48 33.07C55.87 32.82 56.57 32.47 57 32.31C57.42 32.16 57.68 32.15 58.03 32.11Z"/>
+          <path pathLength="100" d="M64.28 39.24C64.38 38.97 64.4 39.16 64.41 39.66C64.41 40.16 64.35 41.63 64.3 42.22C64.25 42.81 64.27 42.7 64.1 43.19C63.93 43.68 63.54 44.67 63.29 45.17C63.03 45.68 62.88 45.85 62.57 46.21C62.26 46.57 61.83 47 61.41 47.33C61 47.66 60.56 47.94 60.07 48.2C59.58 48.47 58.55 48.79 58.47 48.94C58.4 49.08 59.18 49.08 59.63 49.06C60.07 49.03 60.84 48.78 61.12 48.78C61.39 48.79 61.4 48.5 61.28 49.08C60.93 50.75 59.56 56.25 59.04 58.75C58.52 61.25 58.37 62.92 58.13 64.08C57.89 65.24 57.79 65.24 57.6 65.7C57.42 66.17 57.22 66.6 57.02 66.88C56.82 67.15 56.62 67.27 56.4 67.36C56.19 67.45 55.93 67.44 55.73 67.39C55.52 67.35 55.32 67.24 55.17 67.1C55.02 66.97 54.98 66.96 54.84 66.59C54.69 66.23 54.58 66.14 54.3 64.92C54.03 63.7 53.59 60.97 53.18 59.28C52.77 57.58 52.2 55.78 51.84 54.76C51.49 53.73 51.35 53.61 51.06 53.14C50.77 52.66 50.38 52.18 50.08 51.9C49.79 51.62 49.56 51.53 49.3 51.44C49.05 51.36 48.89 51.32 48.57 51.4C48.25 51.47 47.8 51.56 47.37 51.89C46.93 52.21 46.2 53.09 45.98 53.36C45.77 53.63 45.93 53.57 46.07 53.51C46.22 53.45 46.68 53.05 46.83 53C46.98 52.96 47.05 52.8 46.97 53.25C46.52 55.18 44.78 62.3 44.12 64.58C43.47 66.85 43.33 66.44 43.05 66.89C42.77 67.33 42.63 67.23 42.44 67.25C42.25 67.28 42.09 67.24 41.89 67.05C41.7 66.86 41.48 66.67 41.25 66.13C41.02 65.59 40.82 65.21 40.5 63.82C40.19 62.43 39.59 58.8 39.39 57.79C39.1 56.6 38.62 57.4 38.65 56.18C38.7 55.4 38.77 55.11 38.94 54.52C39.12 53.93 39.44 53.15 39.69 52.67C39.94 52.18 40.06 51.99 40.44 51.59C40.82 51.2 41.37 50.67 41.95 50.31C42.53 49.95 43.17 49.7 43.93 49.43C44.69 49.16 44.35 49.17 46.51 48.69C48.68 48.21 54.8 47.04 56.93 46.55C59.05 46.07 58.69 45.99 59.26 45.77C59.83 45.55 59.9 45.5 60.35 45.23C60.8 44.96 61.44 44.61 61.93 44.15C62.43 43.68 62.99 42.92 63.3 42.45C63.6 41.98 63.61 41.84 63.77 41.3C63.94 40.77 64.17 39.52 64.28 39.24Z"/>
+        </g>
+      </g>
+    </svg>
+      <span class="preloader-label">Loading</span>
+    </div>
+    <script is:inline>
+      (function () {
+        var el = document.getElementById('preloader');
+        if (!el) return;
+        var root = document.documentElement, start = Date.now(), done = false;
+        root.classList.add('is-loading');
+        function hide() {
+          if (done) return;
+          done = true;
+          el.classList.add('is-hidden');
+          root.classList.remove('is-loading');
+          var removed = false;
+          function remove() {
+            if (removed) return;
+            removed = true;
+            el.remove();
+            window.dispatchEvent(new Event('cda:ready'));
+          }
+          el.addEventListener('transitionend', remove, { once: true });
+          setTimeout(remove, 800);
+        }
+        // Wait for one full draw of the seal (lettering is in by ~2.75s) before fading.
+        function finish() { setTimeout(hide, Math.max(0, 3000 - (Date.now() - start))); }
+        if (document.readyState === 'complete') finish();
+        else window.addEventListener('load', finish, { once: true });
+        setTimeout(hide, 8000);
+      })();
+    </script>
+    </Fragment>}
     <slot />
   </body>
 </html>
@@ -201,4 +255,64 @@ const { title, description } = Astro.props;
       animation: none !important;
     }
   }
+
+  /* Preloader */
+  html.is-loading {
+    overflow: hidden;
+  }
+  .preloader {
+    gap: 22px;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(70% 60% at 50% 40%, #fff 0%, #f3f6fa 100%);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  .preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .preloader-label {
+    color: #0b345b;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    animation: ld-label 1.6s ease-in-out infinite;
+  }
+  @keyframes ld-label {
+    50% {
+      opacity: 0.35;
+    }
+  }
+  /* Seal Draw: the CDA seal draws itself (3.6s loop) */
+.preloader.is-hidden .cda-seal, .preloader.is-hidden .cda-seal * { animation-play-state: paused; }
+.cda-seal { display: block; width: 140px; height: 140px; overflow: visible; }
+.cda-seal .seal { animation: cda-out 3.6s ease-in-out infinite; }
+.cda-seal .disc { fill: #0a345a; stroke: #0a345a; stroke-width: 1.4; stroke-dasharray: 101 110; animation: cda-disc 3.6s ease-in-out infinite; }
+.cda-seal .ring, .cda-seal .inner { fill: none; stroke: #fff; stroke-dasharray: 101 110; stroke-dashoffset: 106; }
+.cda-seal .ring { stroke-width: 2.7; animation: cda-ring 3.6s ease-in-out infinite; }
+.cda-seal .inner { stroke-width: 1.9; animation: cda-inner 3.6s ease-in-out infinite; }
+.cda-seal .tooth path { fill: #fff; stroke: #fff; stroke-width: .8; stroke-linejoin: round; stroke-dasharray: 101 110; animation: cda-tooth 3.6s ease-in-out infinite; }
+.cda-seal .words { animation: cda-words 3.6s ease-in-out infinite; }
+.cda-seal .words text { fill: #fff; font-family: "Work Sans", sans-serif; font-weight: 600; }
+.cda-seal .dot { fill: #fff; }
+.cda-seal .top { font-size: 8.1px; letter-spacing: .2px; }
+.cda-seal .bottom { font-size: 6.6px; letter-spacing: .1px; }
+@keyframes cda-out { 0%, 88% { opacity: 1; } 97%, 100% { opacity: 0; } }
+@keyframes cda-disc { 0% { stroke-dashoffset: 106; fill-opacity: 0; } 22% { stroke-dashoffset: 0; fill-opacity: 0; } 32%, 100% { stroke-dashoffset: 0; fill-opacity: 1; } }
+@keyframes cda-ring { 0%, 28% { stroke-dashoffset: 106; } 52%, 100% { stroke-dashoffset: 0; } }
+@keyframes cda-inner { 0%, 34% { stroke-dashoffset: 106; } 56%, 100% { stroke-dashoffset: 0; } }
+@keyframes cda-tooth { 0%, 40% { stroke-dashoffset: 106; fill-opacity: 0; } 66% { stroke-dashoffset: 0; fill-opacity: 0; } 74%, 100% { stroke-dashoffset: 0; fill-opacity: 1; } }
+@keyframes cda-words { 0%, 62% { opacity: 0; } 76%, 100% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .cda-seal * { animation: none !important; }
+  .cda-seal .ring, .cda-seal .inner, .cda-seal .tooth path { stroke-dashoffset: 0; }
+}
+
+  @media (prefers-reduced-motion: reduce) { .preloader-label { animation: none !important; } }
 </style>
